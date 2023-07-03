@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Dice
+  - Table
+  - Decorations
   - 
   - 
   - 
@@ -40,4 +40,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 385223057
+    locked: 0
+  - name: Table
+    uniqueID: 3038030505
+    locked: 0
+  - name: Floor
+    uniqueID: 2393540323
     locked: 0
