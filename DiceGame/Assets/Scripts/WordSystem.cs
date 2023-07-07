@@ -7,25 +7,27 @@ using UnityEngine.UI;
 public class WordSystem : MonoBehaviour
 {
     [SerializeField] public GameObject dice;
-    [SerializeField] public Text wordText;
+    [SerializeField] public LetterSpawner wordSpawner;
     [SerializeField] public Button rollButton;
+    [SerializeField] public ParticleSystem particleSystem;
+
 
     List<string> easyWords = new List<string>()
     {
-        "cat",
-        "dog",
-        "bat",
-        "rat",
-        "hat",
-        "cap",
-        "map",
-        "nap",
+        "Cat",
+        "Dog",
+        "Bat",
+        "Rat",
+        "Hat",
+        "Cap",
+        "Map",
+        "Nap",
     };
     List<string> mediumWords = new List<string>()
     {
-        "Enigmatic",
-        "Alleviate",
-        "Resilient",
+        "Bottle",
+        "Catastrophe",
+        "Durable",
         "Seldom",
         "Shelter",
         
@@ -33,12 +35,12 @@ public class WordSystem : MonoBehaviour
     };
     List<string> hardWords = new List<string>()
     {
-        "Ubiquitous",
-        "Egregious",
-        "Magnanimous",
-        "Serendipity",
-        "Esoteric",
-        "Vicarious",
+        "Ornate",
+        "Loathe",
+        "Lobby",
+        "Dreamer",
+        "Rancor",
+        "Zealous",
        
     };
 
@@ -51,35 +53,22 @@ public class WordSystem : MonoBehaviour
     {
         wallCheck = dice.GetComponent<DiceWallCheck>();
         diceRoll = dice.GetComponent<DiceRoll>();
+      
     }
 
     void Update()
     {
-        /*Debug.Log("Dice Landed: " + wallCheck.diceLanded + "Dice Rolled: " + diceRoll.diceRolled);*/
 
         if (diceRoll.diceRolled && wallCheck.diceLanded)
         {
-            int topSideNumber = wallCheck.GetTopSideNumber();
-            if (topSideNumber == 1 || topSideNumber == 2)
-            {
-                wordText.text = GetRandomWord(levelOfWord.easy);
-            }
-            else if (topSideNumber == 3 || topSideNumber == 4)
-            {
-                wordText.text = GetRandomWord(levelOfWord.medium);
-            }
-            else if (topSideNumber == 5 || topSideNumber == 6)
-            {
-                wordText.text = GetRandomWord(levelOfWord.hard);
-            }
+            particleSystem.transform.rotation = Quaternion.Euler(-90, 0, 0);
+            particleSystem.Play();
+            wordSpawner.spawnWord(wallCheck.getTopWord());
             rollButton.interactable = true;
             diceRoll.diceRolled = false;
             wallCheck.diceLanded = false;
         }
-        else if (diceRoll.diceRolled && !wallCheck.diceLanded)
-        {
-            wordText.text = "Rolling...";
-        }
+   
 
     }
 
@@ -108,5 +97,37 @@ public class WordSystem : MonoBehaviour
             return "Cheating is not allowed";
         }
      
+    }
+
+    public string[] drawWordsForDice(int numberOfSides)
+    {
+        levelOfWord[] levels = { levelOfWord.easy, levelOfWord.medium, levelOfWord.hard };
+        string[] words = new string[numberOfSides];
+
+        int levelIndex = 0;
+
+        for (int i = 0; i < numberOfSides; i++)
+        {
+            string randomWord = GetRandomWord(levels[levelIndex]);
+            if (i == 0)
+            {
+                words[i] = randomWord;
+            }
+            else
+            {
+                while (words[i - 1] == randomWord)
+                {
+                    randomWord = GetRandomWord(levels[levelIndex]);
+                }
+                words[i] = randomWord;
+            }
+
+
+            if ((i + 1) % 2 == 0)
+            {
+                levelIndex = (levelIndex + 1) % 3;
+            }
+        }
+        return words;
     }
 }

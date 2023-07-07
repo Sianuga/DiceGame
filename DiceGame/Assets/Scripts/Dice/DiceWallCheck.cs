@@ -9,7 +9,7 @@ public class DiceWallCheck : MonoBehaviour
     BoxCollider boxCollider;
     public bool diceLanded { get;  set; } = false;
     private Rigidbody rb;
-    private float rayCastLength=0.1f;
+    private float rayCastLength=1f;
     private DiceRoll diceRoll;
 
     void Awake()
@@ -109,5 +109,10 @@ public class DiceWallCheck : MonoBehaviour
             i++;
         }
         return -1;
+    }
+
+    public string getTopWord()
+    {
+        return diceRoll.diceSidesText[GetTopSideNumber() - 1].text;
     }
 }
