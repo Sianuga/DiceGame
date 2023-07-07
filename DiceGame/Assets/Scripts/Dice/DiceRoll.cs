@@ -17,6 +17,11 @@ public class DiceRoll : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        SetupDice();
+    }
+
+    private void SetupDice()
+    {
         startingPosition = transform.position + Vector3.up;
         transform.position = startingPosition;
 
@@ -27,8 +32,7 @@ public class DiceRoll : MonoBehaviour
     }
 
 
-    
- 
+
     public void RollDice()
     {
 

@@ -61,15 +61,20 @@ public class WordSystem : MonoBehaviour
 
         if (diceRoll.diceRolled && wallCheck.diceLanded)
         {
-            particleSystem.transform.rotation = Quaternion.Euler(-90, 0, 0);
-            particleSystem.Play();
-            wordSpawner.spawnWord(wallCheck.getTopWord());
-            rollButton.interactable = true;
-            diceRoll.diceRolled = false;
-            wallCheck.diceLanded = false;
+            finishThrow();
         }
-   
 
+
+    }
+
+    private void finishThrow()
+    {
+        particleSystem.transform.rotation = Quaternion.Euler(-90, 0, 0);
+        particleSystem.Play();
+        wordSpawner.spawnWord(wallCheck.getTopWord());
+        rollButton.interactable = true;
+        diceRoll.diceRolled = false;
+        wallCheck.diceLanded = false;
     }
 
     enum levelOfWord

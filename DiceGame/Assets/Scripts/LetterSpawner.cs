@@ -22,20 +22,22 @@ public class LetterSpawner : MonoBehaviour
 
     void Start()
     {
+        SetupLetters();
 
+    }
+
+    private void SetupLetters()
+    {
         for (int i = 0; i < maxWordLength; i++)
         {
             GameObject letter = Instantiate(lettersGO["I"], transform.position, transform.rotation, transform);
             letter.name = "Letter " + i;
-            letter.transform.Rotate(letterRotation, 0,0);
-            letters.Add(letter) ;
+            letter.transform.Rotate(letterRotation, 0, 0);
+            letters.Add(letter);
             letters[i].transform.Translate(letterDistance * i - startingPoint, 0, 0);
-/*            Renderer renderer = letters[i].GetComponent<Renderer>();
-            StartCoroutine(FadeLetter(renderer.material, fadeDuration,  0 , true));*/
+
 
         }
-      
-
     }
 
     int calculateMiddlePoint(int numberOfSpots)
